@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        // object mahasiswa nim, nama, jurusan, fakultas
+        // 1. Object biasa
+        let mahasiswa = {
+            nim: "231011450111",
+            nama: "moch sandi",
+            jurusan: "Informatika",
+            fakultas: "ilmu komputer"
+        };
+
+        console.log(mahasiswa);
+        
+        // Akses object
+        console.log(mahasiswa.nim);      // Hasil: 231011450111
+        console.log(mahasiswa.nama);     // Hasil: moch sandi
+        console.log(mahasiswa.jurusan);  // Hasil: Informatika
+        console.log(mahasiswa.fakultas); // Hasil: ilmu komputer
+
+        // 2. Object dengan method
+        let mahasiswa2 = {
+            nim: "231011450112",
+            nama: "siska cahya",
+            jurusan: "hukum",
+            fakultas: "ilmu hukum",
+            getInfo: function() {
+                return `${this.nama} (${this.nim}) - ${this.jurusan}, ${this.fakultas}`;
+            }
+        };
+
+        console.log(mahasiswa2.getInfo());
+    </script>
+    
+</body>
+</html>

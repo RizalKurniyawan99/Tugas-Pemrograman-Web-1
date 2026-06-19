@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Pertemuan 14 - CRUD Array Object</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn-container {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-tambah { background-color: #28a745; color: white; }
+        .btn-update { background-color: #007bff; color: white; display: none; }
+        .btn-edit { background-color: #ffc107; color: black; margin-right: 5px; }
+        .btn-hapus { background-color: #dc3545; color: white; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Form Input Data Mahasiswa</h2>
+    
+    <!-- Bagian Form Input -->
+    <div class="form-group">
+        <label for="nim">NIM :</label>
+        <input type="text" id="nim" placeholder="Masukkan NIM">
+    </div>
+    <div class="form-group">
+        <label for="nama">Nama :</label>
+        <input type="text" id="nama" placeholder="Masukkan Nama">
+    </div>
+    <div class="form-group">
+        <label for="jurusan">Jurusan :</label>
+        <input type="text" id="jurusan" placeholder="Masukkan Jurusan">
+    </div>
+    <div class="form-group">
+        <label for="fakultas">Fakultas :</label>
+        <input type="text" id="fakultas" placeholder="Masukkan Fakultas">
+    </div>
+
+    <!-- Tombol Aksi -->
+    <div class="btn-container">
+        <button id="btnTambah" class="btn-tambah" onclick="tambahData()">TAMBAH</button>
+        <button id="btnUpdate" class="btn-update" onclick="simpanUpdate()">UPDATE</button>
+    </div>
+
+    <!-- Tabel Tampilan Data -->
+    <h3>Data Tersimpan (Array Object)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Jurusan</th>
+                <th>Fakultas</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tabelData">
+            <!-- Data dari JavaScript akan muncul di sini -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // 1. Variabel Global bertipe Array of Object 
+    // Sudah diisi dengan data awal milik kamu sendiri
+    var dataMahasiswa = [
+        {
+            nim: "231011450747",
+            nama: "Rizal Kurniyawan",
+            jurusan: "Teknik Informatika",
+            fakultas: "Teknik"
+        }
+    ];
+    
+    // Variabel penanda untuk menyimpan indeks data yang sedang di-edit
+    var indeksYangDiedit = -1;
+
+    // Kumpulan Element DOM agar mudah diakses
+    var inputNim = document.getElementById("nim");
+    var inputNama = document.getElementById("nama");
+    var inputJurusan = document.getElementById("jurusan");
+    var inputFakultas = document.getElementById("fakultas");
+    var btnTambah = document.getElementById("btnTambah");
+    var btnUpdate = document.getElementById("btnUpdate");
+
+    // Jalankan fungsi ini pertama kali agar data awal langsung muncul di tabel
+    tampilkanData();
+
+    // 2. FUNGSI UNTUK MENAMPILKAN DATA (READ)
+    function tampilkanData() {
+        var tabel = document.getElementById("tabelData");
+        tabel.innerHTML = ""; // Kosongkan isi tabel sebelum diisi ulang
+
+        // Looping data dari array dan masukkan ke baris tabel HTML
+        for (var i = 0; i < dataMahasiswa.length; i++) {
+            var row = tabel.insertRow();
+            
+            row.insertCell(0).innerText = dataMahasiswa[i].nim;
+            row.insertCell(1).innerText = dataMahasiswa[i].nama;
+            row.insertCell(2).innerText = dataMahasiswa[i].jurusan;
+            row.insertCell(3).innerText = dataMahasiswa[i].fakultas;
+
+            // Membuat kolom tombol Edit dan Hapus
+            var aksiCell = row.insertCell(4);
+            aksiCell.innerHTML = 
+                "<button class='btn-edit' onclick='editData(" + i + ")'>Edit</button>" +
+                "<button class='btn-hapus' onclick='hapusData(" + i + ")'>Hapus</button>";
+        }
+    }
+
+    // 3. FUNGSI UNTUK MENAMBAH DATA (CREATE)
+    function tambahData() {
+        // Validasi jika ada inputan yang kosong
+        if (inputNim.value == "" || inputNama.value == "" || inputJurusan.value == "" || inputFakultas.value == "") {
+            alert("Semua data harus diisi!");
+            return;
+        }
+
+        // Membuat objek baru dari nilai inputan form
+        var mahasiswaBaru = {
+            nim: inputNim.value,
+            nama: inputNama.value,
+            jurusan: inputJurusan.value,
+            fakultas: inputFakultas.value
+        };
+
+        // Memasukkan objek baru ke dalam array utama
+        dataMahasiswa.push(mahasiswaBaru);
+
+        // Reset isi form dan perbarui tampilan tabel
+        bersihkanForm();
+        tampilkanData();
+    }
+
+    // 4. FUNGSI UNTUK MEMICU EDIT DATA
+    function editData(index) {
+        // Simpan indeks urutan data yang mau diubah ke variabel global
+        indeksYangDiedit = index;
+
+        // Pindahkan data dari array kembali masuk ke form input di atas
+        inputNim.value = dataMahasiswa[index].nim;
+        inputNama.value = dataMahasiswa[index].nama;
+        inputJurusan.value = dataMahasiswa[index].jurusan;
+        inputFakultas.value = dataMahasiswa[index].fakultas;
+
+        // Tukar tampilan tombol: Sembunyikan "TAMBAH", Munculkan "UPDATE"
+        btnTambah.style.display = "none";
+        btnUpdate.style.display = "inline-block";
+    }
+
+    // 5. FUNGSI UNTUK MENYIMPAN HASIL PERUBAHAN (UPDATE)
+    function simpanUpdate() {
+        if (indeksYangDiedit === -1) return;
+
+        // Timpa data lama di dalam array dengan nilai baru yang ada di form input
+        dataMahasiswa[indeksYangDiedit].nim = inputNim.value;
+        dataMahasiswa[indeksYangDiedit].nama = inputNama.value;
+        dataMahasiswa[indeksYangDiedit].jurusan = inputJurusan.value;
+        dataMahasiswa[indeksYangDiedit].fakultas = inputFakultas.value;
+
+        // Kembalikan tampilan tombol ke kondisi awal
+        btnTambah.style.display = "inline-block";
+        btnUpdate.style.display = "none";
+
+        // Reset penanda indeks, bersihkan form, dan perbarui tabel
+        indeksYangDiedit = -1;
+        bersihkanForm();
+        tampilkanData();
+    }
+
+    // 6. FUNGSI UNTUK MENGHAPUS DATA (DELETE)
+    function hapusData(index) {
+        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+            // Menghapus 1 elemen dari array berdasarkan indeks urutannya
+            dataMahasiswa.splice(index, 1);
+            
+            // Antisipasi jika sedang mode edit tapi datanya malah dihapus
+            btnTambah.style.display = "inline-block";
+            btnUpdate.style.display = "none";
+            bersihkanForm();
+            
+            // Perbarui tampilan tabel
+            tampilkanData();
+        }
+    }
+
+    // Fungsi pembantu untuk mengosongkan teks di form input
+    function bersihkanForm() {
+        inputNim.value = "";
+        inputNama.value = "";
+        inputJurusan.value = "";
+        inputFakultas.value = "";
+    }
+</script>
+
+</body>
+</html>

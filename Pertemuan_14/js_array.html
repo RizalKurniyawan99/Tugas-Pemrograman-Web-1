@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Array JavaScript</title>
+</head>
+<body>
+
+    <h2>Buka Console di Developer Tools (F12) untuk melihat hasilnya!</h2>
+
+    <script>
+        // Array number
+        let arr = [1, 2, 3, 4, 5];
+        console.log(arr);
+
+        // Array string
+        let arr2 = ["a", "b", "c", "d", "e"];
+        console.log(arr2);
+
+        // Array mix
+        let arr3 = [1, "a", true, null, undefined];
+        console.log(arr3);
+
+        // Access array by index
+        console.log(arr[0]);  // Hasil: 1
+        console.log(arr2[2]); // Hasil: "c"
+        console.log(arr3[4]); // Hasil: undefined
+
+        // Access array by length
+        console.log(arr.length);  // Hasil: 5
+        console.log(arr2.length); // Hasil: 5
+        console.log(arr3.length); // Hasil: 5
+
+        // Dengan looping
+        for (let i = 0; i < arr.length; i++) {
+            console.log(arr[i]);
+        }
+    </script>
+
+</body>
+</html>
