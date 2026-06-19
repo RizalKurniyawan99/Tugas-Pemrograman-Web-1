@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kalkulator Sederhana - Pemrograman Web 1</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Internal CSS -->
+    <style>
+        .judul-js {
+            color: #2563eb;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Inline CSS -->
+        <h1 style="text-align:center; color:#0f172a;">
+            Tugas Pemrograman Web 1
+        </h1>
+
+        <p class="subjudul">
+            Implementasi HTML, CSS, dan JavaScript
+        </p>
+
+        <div class="card">
+
+            <h2>Deskripsi Program</h2>
+
+            <p>
+                Program ini merupakan kalkulator sederhana berbasis web yang dibuat menggunakan HTML, CSS,
+                dan JavaScript. Program ini menerapkan operator aritmatik, operator penugasan,
+                dan operator pembanding.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 class="judul-js">
+                Kalkulator Sederhana Mas Izal
+            </h2>
+
+            <label>Angka Pertama</label>
+            <input type="number" id="angka1" placeholder="Masukkan angka pertama">
+
+            <label>Angka Kedua</label>
+            <input type="number" id="angka2" placeholder="Masukkan angka kedua">
+
+            <div class="button-group">
+                <button onclick="hitung('+')">+</button>
+                <button onclick="hitung('-')">-</button>
+                <button onclick="hitung('*')">×</button>
+                <button onclick="hitung('/')">÷</button>
+            </div>
+
+            <div id="hasil" class="hasil-box">
+                Hasil akan muncul di sini
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Penerapan Operator JavaScript</h2>
+
+            <ul>
+                <li>Operator Aritmatik : +, -, *, /</li>
+                <li>Operator Penugasan : +=</li>
+                <li>Operator Pembanding : >=</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function hitung(operator) {
+
+            // Variabel
+            let angka1 = parseFloat(document.getElementById("angka1").value);
+            let angka2 = parseFloat(document.getElementById("angka2").value);
+
+            let hasil;
+
+            // Operator Aritmatik
+            if (operator == '+') {
+                hasil = angka1 + angka2;
+            }
+
+            else if (operator == '-') {
+                hasil = angka1 - angka2;
+            }
+
+            else if (operator == '*') {
+                hasil = angka1 * angka2;
+            }
+
+            else if (operator == '/') {
+                hasil = angka1 / angka2;
+            }
+
+            // Operator Penugasan
+            let bonus = 0;
+            bonus += 1;
+
+            // Operator Pembanding
+            let cekHasil = hasil >= 100;
+
+            // Output
+            document.getElementById("hasil").innerHTML = `
+                <h3>Hasil Perhitungan</h3>
+
+                <p><b>Hasil:</b> ${hasil}</p>
+
+                <p><b>Bonus Penugasan:</b> ${bonus}</p>
+
+                <p><b>Apakah hasil >= 100 ?</b> ${cekHasil}</p>
+            `;
+
+            console.log("Perhitungan berhasil dilakukan");
+        }
+
+    </script>
+
+</body>
+</html>
